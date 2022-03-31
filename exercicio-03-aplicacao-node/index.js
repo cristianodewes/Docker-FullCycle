@@ -15,8 +15,11 @@ const sql = "INSERT INTO people(name) VALUES('Cristiano')";
 connection.query(sql);
 connection.end();
 
+const select = "SELECT name FROM people";
+let name = connection.query(select);
+
 app.get('/', (req, res) => {
-    res.send('<h1>Cristiano Dewes</h1>')
+    res.send('<h1>{name}</h1>')
 })
 
 app.listen(port, () => {
