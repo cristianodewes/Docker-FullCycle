@@ -3,7 +3,9 @@ version: '3'
 services:
 
   app:
-    image: cristianodewes/node-app
+    build:
+      context: .
+      dockerfile: Dockerfile-node
     container_name: node-app
     networks:
       - node-network
@@ -12,16 +14,21 @@ services:
       - db
 
   db:
-    image: cristianodewes/node-db
+    image: mysql:5.7
     command: --innodb-use-native-aio=0
     container_name: node-db
     restart: always
     tty: true
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
     networks:
       - node-network
 
   nginx:
-    image: cristianodewes/node-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
     container_name: node-nginx
     tty: true
     networks:
